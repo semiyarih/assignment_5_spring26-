@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Quick Overview</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="a_quick_overview_files/libs/clipboard/clipboard.min.js"></script>
+<script src="a_quick_overview_files/libs/quarto-html/quarto.js"></script>
+<script src="a_quick_overview_files/libs/quarto-html/popper.min.js"></script>
+<script src="a_quick_overview_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="a_quick_overview_files/libs/quarto-html/anchor.min.js"></script>
+<link href="a_quick_overview_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="a_quick_overview_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="a_quick_overview_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="a_quick_overview_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="a_quick_overview_files/libs/bootstrap/bootstrap-32162a2fca7cb0439643f2faaab1edf3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Quick Overview</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="static-vs.-dynamic-web-pages" class="level2">
+<h2 class="anchored" data-anchor-id="static-vs.-dynamic-web-pages">Static vs.&nbsp;Dynamic Web Pages</h2>
+<ul>
+<li><p><strong>Static web page</strong></p>
+<ul>
+<li>The content is <strong>all there in the HTML</strong> sent by the server.</li>
+<li>When you open the page, you <strong>already see everything</strong> in the source code.</li>
+<li>Easy to scrape with functions like <code>rvest::read_html()</code>.</li>
+</ul></li>
+<li><p><strong>Dynamic web page</strong></p>
+<ul>
+<li>The content is <strong>loaded or changed by JavaScript</strong> after the page loads.</li>
+<li>When you first open the page, <strong>some content may not be in the HTML</strong> yet.</li>
+<li>Harder to scrape — you may need tools that <strong>run JavaScript</strong>, like <code>chromote</code>, <code>httr::live_session</code>, or <strong>Playwright</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="key-points" class="level2">
+<h2 class="anchored" data-anchor-id="key-points">Key Points</h2>
+<ol type="1">
+<li><p><strong>Static pages usually send the full HTML content in the initial server response.</strong> TRUE</p>
+<ul>
+<li>Example: a simple blog page. You can see all the posts by viewing page source.</li>
+</ul></li>
+<li><p><strong>Dynamic pages may require executing JavaScript to load the full content.</strong> TRUE</p>
+<ul>
+<li>Example: a product page where prices or images load after the page finishes loading.</li>
+</ul></li>
+<li><p><strong>Dynamic pages may require tools like httr::live_session, chromote, or Playwright to manipulate the page to capture all the desired content.</strong> TRUE</p>
+<ul>
+<li>These tools <strong>simulate a real browser</strong> and run the JavaScript so you can get the full content.</li>
+</ul></li>
+<li><p><strong>Static pages can only be scraped with APIs, not with HTML parsing.</strong> FALSE</p>
+<ul>
+<li>Static pages <strong>can be scraped directly with HTML parsing</strong> (like <code>rvest::read_html()</code>).</li>
+<li>APIs are <strong>optional</strong>; they’re just another way to get the data.</li>
+</ul></li>
+</ol>
+<section id="simple-analogy" class="level3">
+<h3 class="anchored" data-anchor-id="simple-analogy">Simple analogy</h3>
+<ul>
+<li><strong>Static page</strong> → a printed book: all the content is already there.</li>
+<li><strong>Dynamic page</strong> → a TV screen: some things appear after you press buttons or wait for animations.</li>
+</ul>
+</section>
+</section>
+<section id="what-is-html" class="level1">
+<h1>What is HTML?</h1>
+<ul>
+<li><strong>HTML</strong> = the language used to build webpages.</li>
+<li>Think of it like the <strong>skeleton of a webpage</strong>: it says what each part is (heading, paragraph, image, link, etc.).</li>
+<li>Browsers read HTML to know <strong>what to show</strong> on the page.</li>
+</ul>
+<section id="valid-html-tags-you-might-target-when-scraping" class="level3">
+<h3 class="anchored" data-anchor-id="valid-html-tags-you-might-target-when-scraping">Valid HTML tags you might target when scraping</h3>
+<p>These are the <strong>common “boxes” on a webpage</strong> you might want to grab:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 28%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tag</th>
+<th>What it usually means</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code></td>
+<td>Headings</td>
+<td>Titles or subtitles</td>
+</tr>
+<tr class="even">
+<td><code>&lt;p&gt;</code></td>
+<td>Paragraph</td>
+<td>Text content</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;a&gt;</code></td>
+<td>Link</td>
+<td>Clickable link (<code>href</code>)</td>
+</tr>
+<tr class="even">
+<td><code>&lt;img&gt;</code></td>
+<td>Image</td>
+<td>Images (<code>src</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;div&gt;</code></td>
+<td>Division / section</td>
+<td>Group of elements</td>
+</tr>
+<tr class="even">
+<td><code>&lt;span&gt;</code></td>
+<td>Inline text</td>
+<td>Part of text inside a paragraph</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code></td>
+<td>Lists</td>
+<td>Bulleted or numbered lists</td>
+</tr>
+<tr class="even">
+<td><code>&lt;li&gt;</code></td>
+<td>List item</td>
+<td>Each item in a list</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;table&gt;</code></td>
+<td>Table</td>
+<td>Tabular data</td>
+</tr>
+<tr class="even">
+<td><code>&lt;tr&gt;</code></td>
+<td>Table row</td>
+<td>One row of a table</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;td&gt;</code></td>
+<td>Table cell</td>
+<td>Data in a row</td>
+</tr>
+<tr class="even">
+<td><code>&lt;th&gt;</code></td>
+<td>Table header</td>
+<td>Header of a table column</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tip-for-scraping" class="level3">
+<h3 class="anchored" data-anchor-id="tip-for-scraping">Tip for scraping</h3>
+<ul>
+<li>Look for <strong>tags that contain the data you want</strong>.</li>
+<li>Often you combine the tag with a <strong>class or id</strong> using a <strong>CSS selector</strong>.</li>
+</ul>
+<section id="example-div.product" class="level4">
+<h4 class="anchored" data-anchor-id="example-div.product">Example: <code>div.product</code></h4>
+<p><strong>Example:</strong> <code>div.product</code> <span class="math inline">\(\to\)</span> grab all <code>&lt;div&gt;</code> elements with <code>class="product"</code></p>
+<ul>
+<li>Imagine a webpage has <strong>boxes for each product</strong>.</li>
+<li>Each box is a <code>&lt;div&gt;</code> element.</li>
+<li>The ones that are products have <strong>class=“product”</strong>.</li>
+</ul>
+<p>So when we say:</p>
+<pre><code>div.product</code></pre>
+<p>It means:</p>
+<blockquote class="blockquote">
+<p>“Find all <code>&lt;div&gt;</code> boxes that have the class called <code>product</code>.”</p>
+</blockquote>
+<p>It will <strong>grab all product sections</strong> and ignore other <code>&lt;div&gt;</code>s, like ads or headers.</p>
+</section>
+</section>
+<section id="why-its-useful" class="level3">
+<h3 class="anchored" data-anchor-id="why-its-useful">Why it’s useful</h3>
+<ul>
+<li>Each product’s name, price, and details are <strong>inside that <code>&lt;div class="product"&gt;</code></strong>.</li>
+<li>By grabbing the <code>div.product</code> first, you can then look inside it for the specific info you want.</li>
+</ul>
+</section>
+<section id="css-selector-you-most-likely-need" class="level3">
+<h3 class="anchored" data-anchor-id="css-selector-you-most-likely-need">CSS selector you most likely need</h3>
+<ul>
+<li>You would use:</li>
+</ul>
+<pre><code>"div.product"</code></pre>
+<p>as the <strong>CSS selector</strong> in your <code>html_element()</code> (or <code>html_elements()</code>) function to grab the product sections.</p>
+</section>
+<section id="html_element" class="level3">
+<h3 class="anchored" data-anchor-id="html_element">1. <code>html_element()</code></h3>
+<ul>
+<li>Returns <strong>the first match</strong>.</li>
+<li>If <strong>nothing matches the selector</strong>, it <strong>returns <code>NA</code></strong> (or an empty value in R).</li>
+<li>This is useful if you <strong>expect there might be missing elements</strong> — it won’t break your code, you just get <code>NA</code>.</li>
+</ul>
+</section>
+<section id="html_elements" class="level3">
+<h3 class="anchored" data-anchor-id="html_elements">2. <code>html_elements()</code></h3>
+<ul>
+<li><p>Returns <strong>all matches</strong> as a list of elements.</p></li>
+<li><p>If <strong>no elements match</strong>, it returns an <strong>empty list</strong> (length 0).</p></li>
+<li><p>It <strong>does not automatically give <code>NA</code></strong> for missing items inside the matches.</p></li>
+<li><p>So, if some elements exist but some expected sub-elements inside them are missing, you have to <strong>check inside each element</strong> and handle missing values yourself.</p></li>
+<li><p><code>html_element()</code> on a <strong>missing element</strong> → returns <code>NA</code>.</p></li>
+<li><p><code>html_elements()</code> on a <strong>selector with no matches at all</strong> → returns <strong>empty list</strong>.</p></li>
+</ul>
+<p>*Summary for scraping**</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 36%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Returns if element exists</th>
+<th>Returns if element missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>html_element()</code></td>
+<td>The first match</td>
+<td><code>NA</code></td>
+</tr>
+<tr class="even">
+<td><code>html_elements()</code></td>
+<td>All matches</td>
+<td>Empty list <code>list()</code></td>
+</tr>
+</tbody>
+</table>
+<section id="note" class="level4">
+<h4 class="anchored" data-anchor-id="note">Note:</h4>
+<p><strong>HTML uses “tags” (in pairs) to define the scope of an element</strong></p>
+<ul>
+<li><p>HTML uses <strong>tags like <code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code></strong> to show where something starts and ends.</p></li>
+<li><p>Everything between the pair of tags <strong>belongs to that element</strong>.</p></li>
+</ul>
+<p><strong>Example:</strong> <code>&lt;p&gt;This is a paragraph.&lt;/p&gt;</code> → “This is a paragraph” is inside the <code>&lt;p&gt;</code> element.</p>
+</section>
+<section id="note-1" class="level4">
+<h4 class="anchored" data-anchor-id="note-1">Note:</h4>
+<p><strong>Can HTML tags be nested within other tags?</strong></p>
+<p><strong>NO</strong>.</p>
+<ul>
+<li><p><strong>HTML tags</strong> define the <strong>structure of the content</strong> (<code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;h1&gt;</code>, etc.).</p></li>
+<li><p><strong>CSS properties</strong> define the <strong>style of elements</strong> (<code>color</code>, <code>font-size</code>, <code>border</code>, etc.).</p></li>
+<li><p>You <strong>cannot put HTML tags inside CSS properties</strong>. They are completely separate.</p></li>
+</ul>
+<p>*Correct relationship:**</p>
+<ul>
+<li>HTML tags create elements <span class="math inline">\(\to\)</span> CSS styles those elements using <strong>selectors</strong>, classes, or IDs.</li>
+</ul>
+<p>So:</p>
+<p><strong>HTML tags cannot be nested inside CSS properties.</strong></p>
+</section>
+<section id="note-2" class="level4">
+<h4 class="anchored" data-anchor-id="note-2">Note:</h4>
+<p><strong>Multiple elements on a web page can share the same class or id</strong></p>
+<ul>
+<li><p><strong>Class:</strong> many elements can have the same class.</p>
+<ul>
+<li>Example: many <code>&lt;p class="highlight"&gt;</code> on a page → all highlighted.</li>
+</ul></li>
+<li><p><strong>ID:</strong> usually only <strong>one element should have a specific id</strong>, but sometimes people reuse them.</p></li>
+</ul>
+<p>Here’s the answer <strong>clearly</strong>:</p>
+<ul>
+<li><strong>Multiple elements can share the same class</strong> <span class="math inline">\(\to\)</span> TRUE</li>
+<li><strong>Multiple elements should NOT share the same id</strong> <span class="math inline">\(\to\)</span> FALSE (IDs are supposed to be unique per page)</li>
+</ul>
+<p>So the statement:</p>
+<blockquote class="blockquote">
+<p><em>“Multiple elements on a web page can share the same class and id”</em></p>
+</blockquote>
+<p>is <strong>FALSE</strong> because <strong>id should be unique</strong>, even though class can be shared.</p>
+<blockquote class="blockquote">
+<p><strong>Class</strong> → many elements can have it</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>ID</strong> → only one element should have it</p>
+</blockquote>
+</section>
+<section id="note-3" class="level4">
+<h4 class="anchored" data-anchor-id="note-3">Note:</h4>
+<p><strong>CSS “selectors” can identify one or more specific elements on a page.</strong></p>
+<ul>
+<li>A <strong>CSS selector</strong> is like a <strong>pointer</strong> that tells the browser or scraper <strong>which element(s) you want</strong> on the page.</li>
+<li>It can point to <strong>just one element</strong> or <strong>many elements</strong>.</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li><p><strong>Select one element</strong></p>
+<ul>
+<li><code>#main-title</code> <span class="math inline">\(\to\)</span> picks the element with the id “main-title”</li>
+</ul></li>
+<li><p><strong>Select multiple elements</strong></p>
+<ul>
+<li><code>.product</code> <span class="math inline">\(\to\)</span> picks <strong>all elements</strong> that have class “product”</li>
+<li><code>p</code> <span class="math inline">\(\to\)</span> picks <strong>all paragraphs</strong> on the page</li>
+</ul></li>
+</ol>
+<blockquote class="blockquote">
+<p>So CSS selectors are flexible: they can select <strong>one or many elements</strong>, depending on what you want.</p>
+</blockquote>
+</section>
+<section id="note-4" class="level4">
+<h4 class="anchored" data-anchor-id="note-4">Note:</h4>
+<ul>
+<li>A <strong>CSS class</strong> is like a <strong>name you give to some HTML elements</strong>.</li>
+<li>You can then <strong>tell all elements with that class how they should look</strong>.</li>
+</ul>
+<p><strong>Example in words:</strong></p>
+<ul>
+<li>You have several paragraphs that should all be <strong>red and bold</strong>.</li>
+<li>You give them the class <code>highlight</code>.</li>
+<li>Then in CSS, you say: “Make everything with class <code>highlight</code> red and bold.”</li>
+<li>Result: all those paragraphs get the same formatting automatically.</li>
+</ul>
+<p><strong>Key point:</strong></p>
+<blockquote class="blockquote">
+<p>Classes let you <strong>style multiple elements at once</strong> without touching each one individually.</p>
+</blockquote>
+</section>
+<section id="note-5" class="level4">
+<h4 class="anchored" data-anchor-id="note-5">Note:</h4>
+<p><strong>Can CSS selectors be combined?</strong></p>
+<ul>
+<li>A <strong>CSS selector</strong> tells the browser which element(s) to target.</li>
+<li>You can <strong>combine selectors</strong> to be more specific and pick exactly what you want.</li>
+</ul>
+<p><strong>Example in words:</strong></p>
+<ul>
+<li><p>Suppose a webpage has:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"product"</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">"price"</span><span class="dt">&gt;</span>$10<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"product"</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">"price"</span><span class="dt">&gt;</span>$15<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Selector:</strong> <code>div.product p.price</code></p>
+<ul>
+<li>This means: <strong>pick the <code>&lt;p&gt;</code> elements with class “price” that are inside a <code>&lt;div&gt;</code> with class “product”</strong>.</li>
+<li>You are combining <code>div.product</code> and <code>p.price</code> to be very specific.</li>
+</ul></li>
+</ul>
+<p>*Key point:**</p>
+<blockquote class="blockquote">
+<p>By combining selectors, you can <strong>target exactly the elements you want</strong>, even if there are many similar elements on the page.</p>
+</blockquote>
+<p>###In short</p>
+<ul>
+<li>HTML tags = structure</li>
+<li>CSS classes = style</li>
+<li>CSS selectors = a way to <strong>pick elements</strong></li>
+<li>Tags can be inside each other <span class="math inline">\(\to\)</span> nested</li>
+<li>Selectors can be combined to get specific elements</li>
+<li>Many elements can share the same class (and sometimes id)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="html-vs-xml" class="level1">
+<h1>HTML vs XML</h1>
+<ul>
+<li><strong>HTML</strong> = makes a webpage <strong>look nice</strong>. It tells the browser: “Show a heading, show a paragraph, make it bold.”</li>
+<li><strong>XML</strong> = stores <strong>data in a structured way</strong>. It tells programs: “Here is a name, here is an age, here is a price.”</li>
+</ul>
+<p><strong>Extra tips:</strong></p>
+<ul>
+<li>HTML tags are <strong>pre-made</strong> like <code>&lt;p&gt;</code> or <code>&lt;h1&gt;</code>.</li>
+<li>XML tags are <strong>made by you</strong> like <code>&lt;name&gt;</code> or <code>&lt;price&gt;</code>.</li>
+<li>HTML is for <strong>browsers</strong>; XML is for <strong>data</strong>.</li>
+</ul>
+</section>
+<section id="html-vs-css" class="level1">
+<h1>HTML vs CSS</h1>
+<ul>
+<li><p><strong>HTML</strong> = the <strong>skeleton of a webpage</strong></p>
+<ul>
+<li>Think: “This is a heading, this is a paragraph, this is a button.”</li>
+</ul></li>
+<li><p><strong>CSS</strong> = the <strong>style/appearance</strong> of the page</p>
+<ul>
+<li>Think: “Make this heading blue, this paragraph bigger, this button round.”</li>
+</ul></li>
+</ul>
+<p><strong>Why it matters for scraping?</strong></p>
+<ul>
+<li>You scrape <strong>HTML</strong> (the content).</li>
+<li>But <strong>CSS selectors</strong> (from CSS) help you <strong>find exactly what to scrape</strong>.</li>
+</ul>
+<blockquote class="blockquote">
+<p>HTML defines the structure of the elements on a web page and CSS describes the formatting of the elements.</p>
+</blockquote>
+</section>
+<section id="what-is-the-dom-document-object-model" class="level1">
+<h1>What is the DOM (Document Object Model)?</h1>
+<ul>
+<li>The <strong>DOM</strong> is like a <strong>map or tree of a webpage</strong>.</li>
+<li>It <strong>represents the structure of the page</strong> in a way programs (like browsers or scrapers) can understand.</li>
+<li>Every element in the page—headings, paragraphs, images, links—is a <strong>node</strong> in this tree.</li>
+</ul>
+<section id="is-dom-part-of-html-xml-or-css" class="level3">
+<h3 class="anchored" data-anchor-id="is-dom-part-of-html-xml-or-css">Is DOM part of HTML, XML, or CSS?</h3>
+<ul>
+<li><strong>Not exactly part of them</strong>, but it <strong>represents the structure of HTML or XML</strong> in memory.</li>
+<li><strong>HTML</strong> → the DOM shows all HTML elements as nodes.</li>
+<li><strong>XML</strong> → the DOM shows XML elements as nodes.</li>
+<li><strong>CSS</strong> → can style elements in the DOM, but CSS itself is not part of the DOM.</li>
+</ul>
+<p><strong>Simple way to remember:</strong></p>
+<ul>
+<li>HTML/XML = the <strong>content and structure</strong> of the page.</li>
+<li>DOM = the <strong>tree map of that content</strong> in the browser or program.</li>
+<li>CSS = the <strong>style/appearance</strong> applied to elements in the DOM.</li>
+</ul>
+</section>
+<section id="analogy" class="level3">
+<h3 class="anchored" data-anchor-id="analogy">Analogy</h3>
+<ul>
+<li>HTML/XML = the <strong>blueprint of a house</strong></li>
+<li>DOM = the <strong>3D model of the house</strong> you can walk through</li>
+<li>CSS = the <strong>paint, decorations, furniture</strong></li>
+</ul>
+</section>
+<section id="diagram-showing-html-to-dom-to-css" class="level3">
+<h3 class="anchored" data-anchor-id="diagram-showing-html-to-dom-to-css">Diagram showing HTML <span class="math inline">\(\to\)</span> DOM <span class="math inline">\(\to\)</span> CSS</h3>
+</section>
+<section id="dom-tree-for-html" class="level2">
+<h2 class="anchored" data-anchor-id="dom-tree-for-html">DOM Tree for HTML</h2>
+<pre><code>&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Some text&lt;/p&gt;
+    &lt;div class="product"&gt;
+      &lt;p&gt;Price: $10&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<pre><code>     |
+     v</code></pre>
+</section>
+<section id="dom-document-object-model-the-tree-representation" class="level2">
+<h2 class="anchored" data-anchor-id="dom-document-object-model-the-tree-representation">DOM (Document Object Model – the tree representation)</h2>
+<ul>
+<li>html
+<ul>
+<li>body
+<ul>
+<li>h1 (“Title”)</li>
+<li>p (“Some text”)</li>
+<li>div (class=“product”)
+<ul>
+<li><p>p (“Price: $10”)</p>
+<p>| v</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="css-style-applied-to-dom" class="level2">
+<h2 class="anchored" data-anchor-id="css-style-applied-to-dom">CSS (style applied to DOM)</h2>
+<ul>
+<li>h1 <span class="math inline">\(\to\)</span> font-size: 20px; color: blue</li>
+<li>p <span class="math inline">\(\to\)</span> font-size: 14px</li>
+<li>div.product <span class="math inline">\(\to\)</span> border-left: 4px solid blue</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>HTML</strong> = the content and structure of the page.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>DOM</strong> = a <strong>tree map</strong> of HTML elements that programs and browsers can use.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>CSS</strong> = the <strong>appearance or style</strong> applied to the DOM elements.</p>
+</blockquote>
+<section id="important" class="level3 important">
+<h3 class="anchored" data-anchor-id="important">Important</h3>
+<ol type="1">
+<li><p><strong>Each webpage has different content and structure.</strong></p>
+<ul>
+<li>One page may have <code>&lt;div class="product"&gt;</code>, another may have <code>&lt;article&gt;</code> or no products at all.</li>
+</ul></li>
+<li><p><strong>DOM is built from the HTML of that specific page.</strong></p>
+<ul>
+<li>Every page has its <strong>own DOM tree</strong>, depending on its HTML.</li>
+</ul></li>
+<li><p><strong>CSS affects styling</strong>, but doesn’t make the DOM the same.</p></li>
+</ol>
+</section>
+<blockquote class="blockquote">
+<p>“Every web page <strong>uses the DOM concept</strong>, meaning browsers represent its HTML as a tree of nodes, but each page has a <strong>different DOM</strong> depending on its HTML.”</p>
+</blockquote>
+<section id="what-are-css-selectors" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-css-selectors">What are CSS selectors?</h3>
+<ul>
+<li>Think of a <strong>webpage as a big tree of boxes</strong>. Each box is an HTML element, like a paragraph, heading, image, or button.</li>
+<li>A <strong>CSS selector</strong> is like a <strong>map or address</strong> that tells your scraper exactly which box(es) you want to look at.</li>
+</ul>
+<p>In short: <strong>CSS selectors help you point to the right parts of a webpage.</strong></p>
+</section>
+<section id="common-css-selectors-you-can-use-in-scraping" class="level3">
+<h3 class="anchored" data-anchor-id="common-css-selectors-you-can-use-in-scraping">Common CSS selectors you can use in scraping</h3>
+<ol type="1">
+<li><p><strong>Tag selector</strong></p>
+<ul>
+<li>Picks elements by their HTML tag name.</li>
+<li>Example: <code>p</code> → selects all paragraphs</li>
+<li>Simple: <code>h1</code>, <code>div</code>, <code>span</code>, <code>a</code> (links)</li>
+</ul></li>
+<li><p><strong>ID selector</strong></p>
+<ul>
+<li>Selects a specific element with a unique <code>id</code>.</li>
+<li>Syntax: <code>#idname</code></li>
+<li>Example: <code>#main-title</code> → picks the element with <code>id="main-title"</code></li>
+</ul></li>
+<li><p><strong>Class selector</strong></p>
+<ul>
+<li>Selects elements with a certain class name.</li>
+<li>Syntax: <code>.classname</code></li>
+<li>Example: <code>.product-price</code> → all elements with <code>class="product-price"</code></li>
+</ul></li>
+<li><p><strong>Attribute selector</strong></p>
+<ul>
+<li>Selects elements with a specific attribute.</li>
+<li>Syntax: <code>[attribute=value]</code></li>
+<li>Example: <code>[href="/contact"]</code> → selects a link that goes to <code>/contact</code></li>
+</ul></li>
+<li><p><strong>Descendant selector (space)</strong></p>
+<ul>
+<li>Selects elements <strong>inside another element</strong>.</li>
+<li>Syntax: <code>parent child</code></li>
+<li>Example: <code>div p</code> → all paragraphs inside any <code>&lt;div&gt;</code></li>
+</ul></li>
+<li><p><strong>Child selector (<code>&gt;</code>)</strong></p>
+<ul>
+<li>Picks elements that are <strong>direct children</strong> of a parent.</li>
+<li>Syntax: <code>parent &gt; child</code></li>
+<li>Example: <code>ul &gt; li</code> → list items that are directly inside a <code>&lt;ul&gt;</code>, not deeper</li>
+</ul></li>
+<li><p><strong>Multiple selectors (<code>,</code>)</strong></p>
+<ul>
+<li>Select multiple things at once.</li>
+<li>Example: <code>h1, h2, h3</code> → selects all headings</li>
+</ul></li>
+<li><p><strong>Pseudo-classes</strong></p>
+<ul>
+<li>Special selectors for positions or states, like <code>:first-child</code> or <code>:last-child</code>.</li>
+<li>Example: <code>ul li:first-child</code> → first item in each list</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-in-r-rvest" class="level3">
+<h3 class="anchored" data-anchor-id="example-in-r-rvest">Example in R (rvest)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://rvest.tidyverse.org/articles/starwars.html"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>page</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{html_document}
+&lt;html lang="en"&gt;
+[1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+[2] &lt;body&gt;\n    &lt;a href="#container" class="visually-hidden-focusable"&gt;Skip t ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab all paragraphs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>texts <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"p"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text2</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>texts <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "This vignette contains some data about the Star Wars films for use in rvest examples and vignettes."                                                                                                                            
+[2] "Released: 1999-05-19"                                                                                                                                                                                                           
+[3] "Director: George Lucas"                                                                                                                                                                                                         
+[4] "Turmoil has engulfed the Galactic Republic. The taxation of trade routes to outlying star systems is in dispute."                                                                                                               
+[5] "Hoping to resolve the matter with a blockade of deadly battleships, the greedy Trade Federation has stopped all shipping to the small planet of Naboo."                                                                         
+[6] "While the Congress of the Republic endlessly debates this alarming chain of events, the Supreme Chancellor has secretly dispatched two Jedi Knights, the guardians of peace and justice in the galaxy, to settle the conflict…."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab something by class</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>director <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">".director"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text2</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>director</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "George Lucas"     "George Lucas"     "George Lucas"     "George Lucas"    
+[5] "Irvin Kershner"   "Richard Marquand" "J. J. Abrams"    </code></pre>
+</div>
+</div>
+</section>
+<section id="notes" class="level3 note">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p><strong>Package</strong></p>
+<ul>
+<li><p><code>html_nodes()</code>, html_elements()<code>,</code>html_text()<code>and</code>html_text2()`</p></li>
+<li><p>The functions are from the <strong>same R package: <code>rvest</code></strong>.</p></li>
+<li><p>They are used in <strong>web scraping</strong> to grab content from a webpage.</p></li>
+</ul>
+<p><strong>Functions</strong></p>
+<ol type="1">
+<li><p><strong><code>html_nodes()</code> <span class="math inline">\(\to\)</span> updated to <code>html_elements()</code></strong></p>
+<ul>
+<li>What it does: <strong>find elements on the page using a CSS selector</strong>.</li>
+<li>Example: grab all paragraphs (<code>p</code>) or all elements with class <code>.price</code>.</li>
+<li>Old:</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">"p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>New:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p><strong><code>html_text()</code> → still works, but <code>html_text2()</code> is newer</strong></p>
+<ul>
+<li><p>What it does: <strong>get the text inside the elements you found</strong>.</p></li>
+<li><p><code>html_text2()</code> is better at handling <strong>extra spaces, line breaks, and messy HTML</strong>.</p></li>
+<li><p>Old:</p></li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">"p"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>New:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"p"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li><strong><code>html_nodes()</code> <span class="math inline">\(\to\)</span> <code>html_elements()</code></strong></li>
+<li><strong><code>html_text()</code> <span class="math inline">\(\to\)</span> <code>html_text2()</code> (optional but recommended)</strong></li>
+<li>Both are <strong>from <code>rvest</code></strong>.</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
