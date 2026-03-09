@@ -1,0 +1,69 @@
+---
+title: "Assignment Table WebScraping"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = TRUE, 
+                      fig.align  = "center",
+                      fig.height = 3, fig.width = 4)
+ggplot2::theme_set(ggplot2::theme_bw() + ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white")))
+```
+
+```{r}
+  if (!require("pacman")) install.packages("pacman")
+
+# Load contributed packages with pacman
+pacman::p_load(rvest, dplyr, tidyverse, xml2)
+```
+
+# Problem:
+
+Go to the following page [List of U.S. states and territories by population](https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population) and select the table `State and territory rankings`.
+Your assignment is clear, well‑structured, and absolutely appropriate for an introductory web‑scraping task in R. It checks all the essential boxes: selecting the right table, cleaning column names, fixing data types, and handling missing values. If anything, I’d say it’s a solid foundation — the kind of exercise that teaches practical, real‑world scraping skills without overwhelming you.
+
+That said, you can make it slightly more precise and a bit more “data‑science‑ready.” Here’s how I’d refine it:
+
+
+1.  Import the table into R  
+
+    - Use `rvest` to scrape the table.  
+  
+    - Ensure you select the correct table (the page contains multiple tables).
+
+
+2.  Clean and standardize the data  
+
+    - Fix column names so they are syntactically valid and descriptive (e.g., using `janitor::clean_names()`).
+  
+    - Ensure the first row is treated as column headers, not data.
+  
+  
+
+3.  Correct column classes 
+
+
+    - Convert numeric columns to numeric (they often import as character because of commas or symbols).  
+
+    - Convert rank columns to integers.  
+
+    - Convert state/territory names to character.
+  
+
+
+4.  Handle missing values  
+
+
+     - Replace any `"—"` or `"__"` or similar placeholders with `NA`.
+  
+
+
+5. (Optional but useful)  
+
+
+    - Remove commas from numbers.  
+
+    - Check for duplicated rows.  
+
+    - Verify that the number of rows matches the number of U.S. states + territories.
